@@ -1,0 +1,27 @@
+{
+    "BasicInfo": {
+        "Name":"wordpress_user_enum",
+        "Port":"80",
+        "Protocol":"HTTP",
+        "MitreAttackTags":"",
+        "References":"",
+        "Description":"wordpress user enumeration trap"
+    },
+    "Behaviour":
+    [
+        {
+            "Request": {
+                "Url":"^/wp-json/wp/v2/users/$",
+                "Method": "GET",
+                "Headers": {},
+                "Params": {}
+            },
+            "Response": {
+                "StatusCode": 200,
+                "Body": "traps/assets/wordpress/user_enum.html",
+                "Type":"file"
+            },
+            "trap": "true"
+        }
+    ]
+}

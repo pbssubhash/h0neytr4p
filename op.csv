@@ -1,0 +1,3 @@
+SourceIP,UserAgent,TrappedFor,RiskRating,References
+192.168.1.192:35792,Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.2117.157 Safari/537.36,zabbix-default-credentials,,
+192.168.1.192:35794,Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.2117.157 Safari/537.36,zabbix-default-credentials,,

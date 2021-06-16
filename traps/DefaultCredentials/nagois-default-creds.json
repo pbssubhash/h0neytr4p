@@ -1,0 +1,27 @@
+{
+    "BasicInfo": {
+        "Name":"nagois-default-creds",
+        "Port":"80",
+        "Protocol":"HTTP",
+        "MitreAttackTags":"",
+        "References":"",
+        "Description":"Nagois Admin console default credentials trap"
+    },
+    "Behaviour":
+    [
+        {
+            "Request": {
+                "Url":"^/nagios/side.php*",
+                "Method": "GET",
+                "Headers":{"Authorization":"^Basic.*$"},
+                "Params":{}
+            },
+            "Response": {
+                "StatusCode": 200,
+                "Body": "traps/assets/default/default.html",
+                "Type":"file"
+            },
+            "trap": "true"
+        }
+    ]
+}

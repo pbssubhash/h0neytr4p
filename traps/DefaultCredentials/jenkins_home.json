@@ -1,0 +1,27 @@
+{
+    "BasicInfo": {
+        "Name":"jenkins_home",
+        "Port":"80",
+        "Protocol":"HTTP",
+        "MitreAttackTags":"",
+        "References":"",
+        "Description":""
+    },
+    "Behaviour":
+    [
+        {
+            "Request": {
+                "Url":"^/jenkins$",
+                "Method": "GET",
+                "Headers":{},
+                "Params":{}
+            },
+            "Response": {
+                "StatusCode": 302,
+                "Body": "traps/assets/jenkins/default.html",
+                "Type":"file"
+            },
+            "trap": "true"
+        }
+    ]
+}

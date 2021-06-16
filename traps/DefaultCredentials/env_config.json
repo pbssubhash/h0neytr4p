@@ -1,0 +1,27 @@
+{
+    "BasicInfo": {
+        "Name":"env_config_file",
+        "Port":"80",
+        "Protocol":"HTTP",
+        "MitreAttackTags":"",
+        "References":"",
+        "Description":".env config file exposed trap"
+    },
+    "Behaviour":
+    [
+        {
+            "Request": {
+                "Url":"^/.env.*$",
+                "Method": "GET",
+                "Headers": {},
+                "Params": {}
+            },
+            "Response": {
+                "StatusCode": 200,
+                "Body": "traps/assets/config_files/env.txt",
+                "Type":"file"
+            },
+            "trap": "true"
+        }
+    ]
+}

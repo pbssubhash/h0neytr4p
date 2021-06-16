@@ -1,0 +1,27 @@
+{
+    "BasicInfo": {
+        "Name":"git_config",
+        "Port":"80",
+        "Protocol":"HTTP",
+        "MitreAttackTags":"",
+        "References":"",
+        "Description":"Git config exposed trap"
+    },
+    "Behaviour":
+    [
+        {
+            "Request": {
+                "Url":"*/.git.*$",
+                "Method": "GET",
+                "Headers": {},
+                "Params": {}
+            },
+            "Response": {
+                "StatusCode": 200,
+                "Body": "traps/assets/git/config.txt",
+                "Type":"file"
+            },
+            "trap": "true"
+        }
+    ]
+}
