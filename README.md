@@ -3,6 +3,10 @@
 ## What is h0neytr4p? 
 Honeytrap (a.k.a h0neytr4p) is an easy to configure, deploy honeypot for protecting against web recon and exploiting. 
 
+
+### TLDR; This is how h0neytr4p traps a hypothetical attacker running nuclei! 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/QCrLsj_Wfl8/0.jpg)](https://www.youtube.com/watch?v=QCrLsj_Wfl8)
+
 ## How does it work? 
 Blue teams can create `trap` for each vulnerability or exploit or recon technique and place it in the `/traps` folder and restart h0neytr4p. This will automatically reload the configuration and start the h0neytr4p.
 
@@ -15,9 +19,11 @@ h0neytr4p was primarly built to remove the pain of creating a vulnerable applica
 ## How to deploy it? 
 The tool was build on top of Golang which means it can be easily compiled to your server/machine platform and architecture. 
 
-#### To Build: 
+#### To Build from source (if you don't trust us): 
 
 ```
+git clone https://github.com/pbssubhash/h0neytr4p
+cd h0neytr4p
 go build main.go
 ./main -h
 
@@ -48,3 +54,14 @@ Wrong Arguments.. Exiting Now
         Use -verbose=false for disabling streaming output; by default it's true (default "true")
 ```
 
+
+#### Run Binaries directly (for my lazy homies): 
+Coming soon.
+
+## How can I create a trap?
+Head to [Creating Traps](https://github.com/pbssubhash/h0neytr4p/blob/main/docs/Creating-Traps.md). We attempted to simplify the process.
+
+## TO-DO: 
+[] Enable HTTPS
+[] Push more traps
+[] 
