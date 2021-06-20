@@ -61,7 +61,20 @@ Coming soon.
 ## How can I create a trap?
 Head to [Creating Traps](https://github.com/pbssubhash/h0neytr4p/blob/main/docs/Creating-Traps.md). We attempted to simplify the process.
 
-## TO-DO: 
-[] Enable HTTPS
-[] Push more traps
-[] 
+## Frequently asked questions:
+
+#### I have an issue. Something's not working.
+Please open an issue at [Issues](https://github.com/pbssubhash/h0neytr4p/issues/new). We'll try to respond as soon as possible. 
+
+#### I found a security issue or a potential vulnerability that could impact it's users? 
+Thanks for taking time looking at our tool, Please email us the full details of the vulnerability at zer0.p1k4chu@gmail.com
+
+#### I want a new feature that's not there. What to do? 
+Please open an issue at [Issues](https://github.com/pbssubhash/h0neytr4p/issues/new). Consider opening a pull request :-) 
+
+## TO-DO:
+<ol>
+ <li> Enable HTTPS </li>
+ <li> Push more traps to prod </li>
+ <li> Nice wiki </li> 
+</ol>
