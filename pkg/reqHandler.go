@@ -150,5 +150,9 @@ func StartHandler(port string, trapConfig []Trap) {
 	trapConfigGlobal = trapConfig
 	// r.HandleFunc("/", allHandler)
 	r.PathPrefix("/").Handler(allHandler())
-	log.Fatal(http.ListenAndServe(":"+port, r))
+	if port == "443" {
+
+	} else {
+		log.Fatal(http.ListenAndServe(":"+port, r))
+	}
 }
