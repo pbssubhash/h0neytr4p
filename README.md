@@ -1,6 +1,6 @@
 <div style="text-align:center"><img src="https://github.com/pbssubhash/h0neytr4p/blob/main/logo.png?raw=true" /></div>
 
-Built by Redteamers with :heart_eyes_cat: for our Blue Team friends. <br> 
+Built by Redteamers with :heart_eyes_cat: for our Blue Team friends. <br> <br>
 Authors: <br>
 - Subhash; [Twitter](https://twitter.com/pbssubhash) | [LinkedIn](https://in.linkedin.com/in/pbssubhash) <br>
 - Aakash; [Twitter](https://twitter.com/me_godsky) | [LinkedIn] (https://in.linkedin.com/in/aakashmadaan13) <br> 
