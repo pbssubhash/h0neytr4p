@@ -1,24 +1,24 @@
 {
     "BasicInfo": {
-        "Name":"nagois-default-creds",
+        "Name":"ibm-infoprint-lfi",
         "Port":"80",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",
-        "Description":"Nagois Admin console default credentials trap"
+        "Description":"IBM InfoPrint 4247-Z03 Impact Matrix Printer - Directory Traversal trap"
     },
     "Behaviour":
     [
         {
             "Request": {
-                "Url":"/nagios/side.php*",
                 "Method": "GET",
-                "Headers":{"Authorization":"Basic*"},
+                "Url":"/*/etc/passwd",
+                "Headers":{},
                 "Params":{}
             },
             "Response": {
                 "StatusCode": 200,
-                "Body": "traps/assets/default/default.html",
+                "Body": "traps/assets/Vulnerabilities/ibm-infoprint-lfi.txt",
                 "Type":"file"
             },
             "trap": "true"

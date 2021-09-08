@@ -1,0 +1,4 @@
+self
+description
+name
+atlassian.xsrf.token

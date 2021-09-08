@@ -1,24 +1,24 @@
 {
     "BasicInfo": {
-        "Name":"nagois-default-creds",
+        "Name":"jira-unauthenticated-adminprojects",
         "Port":"80",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",
-        "Description":"Nagois Admin console default credentials trap"
+        "Description":"Jira Unauthenticated Admin Projects trap"
     },
     "Behaviour":
     [
         {
             "Request": {
-                "Url":"/nagios/side.php*",
                 "Method": "GET",
-                "Headers":{"Authorization":"Basic*"},
+                "Url":"/rest/menu/latest/admin",
+                "Headers":{},
                 "Params":{}
             },
             "Response": {
                 "StatusCode": 200,
-                "Body": "traps/assets/default/default.html",
+                "Body": "traps/assets/Vulnerabilities/jira-unauthenticated-adminprojects.txt",
                 "Type":"file"
             },
             "trap": "true"

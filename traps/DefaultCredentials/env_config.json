@@ -11,7 +11,7 @@
     [
         {
             "Request": {
-                "Url":"^/.env.*$",
+                "Url":"/.env*",
                 "Method": "GET",
                 "Headers": {},
                 "Params": {}

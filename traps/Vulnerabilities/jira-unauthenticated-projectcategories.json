@@ -1,0 +1,28 @@
+{
+    "BasicInfo": {
+        "Name":"jira-unauthenticated-projectcategories",
+        "Port":"80",
+        "Protocol":"HTTP",
+        "MitreAttackTags":"",
+        "References":"",
+        "Description":"Jira Unauthenticated Project Categories trap"
+    },
+    "Behaviour":
+    [
+        {
+            "Request": {
+                "Method": "GET",
+                "Url":"/rest/api/2/projectCategory",
+                "Headers":{},
+                "Params":{"maxResults":1000}
+            },
+            "Response": {
+                "StatusCode": 200,
+                "Header":{"atlassian.xsrf.token":""},
+                "Body": "traps/assets/Vulnerabilities/jira-unauthenticated-projectcategories.txt",
+                "Type":"file"
+            },
+            "trap": "true"
+        }
+    ]
+}
