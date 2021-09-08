@@ -1,24 +1,24 @@
 {
     "BasicInfo": {
-        "Name":"nagois-default-creds",
+        "Name":"nginx_config_exposed",
         "Port":"80",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",
-        "Description":"Nagois Admin console default credentials trap"
+        "Description":"Exposed nginx.conf trap"
     },
     "Behaviour":
     [
         {
             "Request": {
-                "Url":"/nagios/side.php*",
                 "Method": "GET",
-                "Headers":{"Authorization":"Basic*"},
+                "Url":"/nginx.conf",
+                "Headers":{},
                 "Params":{}
             },
             "Response": {
                 "StatusCode": 200,
-                "Body": "traps/assets/default/default.html",
+                "Body": "traps/assets/config_files/nginx_config.txt",
                 "Type":"file"
             },
             "trap": "true"

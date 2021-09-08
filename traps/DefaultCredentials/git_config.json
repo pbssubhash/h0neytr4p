@@ -11,7 +11,7 @@
     [
         {
             "Request": {
-                "Url":"*/.git.*$",
+                "Url":"*/.git*",
                 "Method": "GET",
                 "Headers": {},
                 "Params": {}

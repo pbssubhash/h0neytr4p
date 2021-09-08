@@ -11,7 +11,7 @@
     [
         {
             "Request": {
-                "Url":"^/wp-json/wp/v2/users/$",
+                "Url":"/wp-json/wp/v2/users/",
                 "Method": "GET",
                 "Headers": {},
                 "Params": {}

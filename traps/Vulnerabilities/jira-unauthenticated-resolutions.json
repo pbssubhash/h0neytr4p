@@ -1,24 +1,24 @@
 {
     "BasicInfo": {
-        "Name":"nagois-default-creds",
+        "Name":"jira-unauthenticated-resolutions",
         "Port":"80",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",
-        "Description":"Nagois Admin console default credentials trap"
+        "Description":"Jira Unauthenticated Resolutions trap"
     },
     "Behaviour":
     [
         {
             "Request": {
-                "Url":"/nagios/side.php*",
                 "Method": "GET",
-                "Headers":{"Authorization":"Basic*"},
+                "Url":"/rest/api/2/resolution",
+                "Headers":{},
                 "Params":{}
             },
             "Response": {
                 "StatusCode": 200,
-                "Body": "traps/assets/default/default.html",
+                "Body": "traps/assets/Vulnerabilities/jira-unauthenticated-resolutions.txt",
                 "Type":"file"
             },
             "trap": "true"

@@ -11,7 +11,7 @@
     [
         {
             "Request": {
-                "Url":"^/jenkins$",
+                "Url":"/jenkins",
                 "Method": "GET",
                 "Headers":{},
                 "Params":{}

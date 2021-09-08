@@ -1,24 +1,25 @@
 {
     "BasicInfo": {
-        "Name":"nagois-default-creds",
+        "Name":"thinkphp-2-rce",
         "Port":"80",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",
-        "Description":"Nagois Admin console default credentials trap"
+        "Description":"ThinkPHP 2 / 3 's' Parameter RCE trap"
     },
     "Behaviour":
     [
         {
             "Request": {
-                "Url":"/nagios/side.php*",
                 "Method": "GET",
-                "Headers":{"Authorization":"Basic*"},
-                "Params":{}
+                "Url":"/index.php",
+                "Headers":{},
+                "Params":{"s":"/index/index/name/*phpinfo()*"}
             },
             "Response": {
                 "StatusCode": 200,
-                "Body": "traps/assets/default/default.html",
+                "Header":{},
+                "Body": "traps/assets/Vulnerabilities/thinkphp-2-rce.txt",
                 "Type":"file"
             },
             "trap": "true"

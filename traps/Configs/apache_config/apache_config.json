@@ -1,24 +1,24 @@
 {
     "BasicInfo": {
-        "Name":"nagois-default-creds",
+        "Name":"apache-config",
         "Port":"80",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",
-        "Description":"Nagois Admin console default credentials trap"
+        "Description":"Apache Config file disclosure trap"
     },
     "Behaviour":
     [
         {
             "Request": {
-                "Url":"/nagios/side.php*",
                 "Method": "GET",
-                "Headers":{"Authorization":"Basic*"},
+                "Url":"/apache.conf",
+                "Headers":{},
                 "Params":{}
             },
             "Response": {
                 "StatusCode": 200,
-                "Body": "traps/assets/default/default.html",
+                "Body": "traps/assets/config_files/apache_config.txt",
                 "Type":"file"
             },
             "trap": "true"

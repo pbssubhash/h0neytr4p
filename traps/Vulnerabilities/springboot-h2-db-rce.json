@@ -1,0 +1,28 @@
+{
+    "BasicInfo": {
+        "Name":"springboot-h2-db-rce",
+        "Port":"80",
+        "Protocol":"HTTP",
+        "MitreAttackTags":"",
+        "References":"",
+        "Description":"Spring Boot H2 Database RCE trap"
+    },
+    "Behaviour":
+    [
+        {
+            "Request": {
+                "Method": "POST",
+                "Url":"/actuator/env",
+                "Headers":{"Content-Type":"application/json"},
+                "Params":{"name":"spring.datasource.hikari.connection-init-sql","value":"CREATE*"}
+            },
+            "Response": {
+                "StatusCode": 200,
+                "Header":{"Content-Type":"application/vnd.spring-boot.actuator"},
+                "Body": "traps/assets/Vulnerabilities/springboot-h2-db-rce.txt",
+                "Type":"file"
+            },
+            "trap": "true"
+        }
+    ]
+}

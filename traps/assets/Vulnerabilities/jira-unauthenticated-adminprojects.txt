@@ -1,0 +1,4 @@
+key
+link
+label
+self
