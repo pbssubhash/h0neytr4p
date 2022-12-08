@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: >-
+  h0neytr4p: Easy to configure Honeypot for Blue Team
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - given-names: Subhash 
+    family-names: Popuri
+    twitter: https://twitter.com/pbssubhash
+  - given-names: Aakash  
+    family-names: Madaan
+    twitter: https://twitter.com/me_godsky
