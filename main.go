@@ -24,7 +24,7 @@ func PrintBanner() {
        Built by a Red team, with <3     |  $$$$$$/                              | $$      
              h0neytr4p v0.1             \______/                               |__/      
         Built by zer0p1k4chu & g0dsky
-    https://github.com/pbssubhash/h0neyt4p
+    https://github.com/pbssubhash/h0neytr4p
 	`)
 }
 
