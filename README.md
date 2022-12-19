@@ -3,6 +3,8 @@
 Built by Redteamers with :heart_eyes_cat: for our Blue Team friends. <br> <br>
 Authors: <br>
 - Subhash; [Twitter](https://twitter.com/pbssubhash) | [LinkedIn](https://in.linkedin.com/in/pbssubhash) <br>
+
+Rule Contributors: 
 - Aakash; [Twitter](https://twitter.com/me_godsky) | [LinkedIn](https://in.linkedin.com/in/aakashmadaan13) <br> 
 
 <br>
