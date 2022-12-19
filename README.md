@@ -77,7 +77,7 @@ Head to [Creating Traps](https://github.com/pbssubhash/h0neytr4p/blob/main/docs/
 Please open an issue at [Issues](https://github.com/pbssubhash/h0neytr4p/issues/new). We'll try to respond as soon as possible. 
 
 #### I found a security issue or a potential vulnerability that could impact it's users? 
-Thanks for taking time looking at our tool, Please email us the full details of the vulnerability at zer0.p1k4chu@gmail.com
+Thanks for taking time looking at our tool, Please email us the full details of the vulnerability at zer0.p1k4chu[@]gmail.com
 
 #### I want a new feature that's not there. What to do? 
 Please open an issue at [Issues](https://github.com/pbssubhash/h0neytr4p/issues/new). Consider opening a pull request :-) 
