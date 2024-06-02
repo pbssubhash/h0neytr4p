@@ -144,11 +144,15 @@ func allHandler() http.Handler {
 		LogIt(LogEntry{SourceIP: GetIP(r), UserAgent: r.Header.Get("User-Agent"), Timestamp: time.Now().Format(time.RFC3339), Path: r.RequestURI, Trapped: "false"})
 	})
 }
-func StartHandler(port string, trapConfig []Trap) {
+func StartHandler(port string, trapConfig []Trap, cert string, key string) {
 	r := mux.NewRouter()
 	fmt.Println("[~>] Loaded " + strconv.Itoa(len(trapConfig)) + " traps on Port:" + port + ". Let's get the ball rolling!")
 	trapConfigGlobal = trapConfig
 	// r.HandleFunc("/", allHandler)
 	r.PathPrefix("/").Handler(allHandler())
-	log.Fatal(http.ListenAndServe(":"+port, r))
+	if port == "443"{
+		log.Fatal(http.ListenAndServeTLS(":"+port, cert, key, r))
+	}else{
+		log.Fatal(http.ListenAndServe(":"+port, r))
+	}
 }
