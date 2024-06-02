@@ -1,7 +1,7 @@
 {
     "BasicInfo": {
         "Name":"exposed-mysql-initial",
-        "Port":"80",
+        "Port":"443",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",

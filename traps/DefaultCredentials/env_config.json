@@ -1,7 +1,7 @@
 {
     "BasicInfo": {
         "Name":"env_config_file",
-        "Port":"80",
+        "Port":"443",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",

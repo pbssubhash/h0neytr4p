@@ -33,7 +33,7 @@ Each trap must contain the following details in the JSON format. Most of the ele
 {
     "BasicInfo": {
         "Name":"jenkins_home",
-        "Port":"80",
+        "Port":"443",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",

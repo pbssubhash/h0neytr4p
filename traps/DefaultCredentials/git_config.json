@@ -1,7 +1,7 @@
 {
     "BasicInfo": {
         "Name":"git_config",
-        "Port":"80",
+        "Port":"443",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",

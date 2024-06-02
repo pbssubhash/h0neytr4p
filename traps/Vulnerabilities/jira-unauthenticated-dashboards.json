@@ -1,7 +1,7 @@
 {
     "BasicInfo": {
         "Name":"jira-unauthenticated-adminprojects",
-        "Port":"80",
+        "Port":"443",
         "Protocol":"HTTP",
         "MitreAttackTags":"",
         "References":"",
