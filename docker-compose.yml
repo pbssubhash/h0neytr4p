@@ -1,0 +1,11 @@
+services:
+  h0neytr4p:
+    build: .
+    image: dtagdevsec/h0neytr4p:testing
+    read_only: true
+    container_name: h0neytr4p
+    restart: always
+    ports:
+      - "443:443"
+    volumes:
+      - ./log/:/opt/h0neytr4p/log/
