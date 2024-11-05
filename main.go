@@ -42,21 +42,19 @@ func main() {
 	PrintBanner()
 	var wg sync.WaitGroup
 	trapsFolder := flag.String("traps", "Default", "Traps folder - It's a string.")
-	output := flag.String("output", "Default", "Output file - It's a string.")
 	log := flag.String("log", "Default", "Log file - It's a string.")
 	cert := flag.String("cert", "Default", "Certificate File")
 	key := flag.String("key", "Default", "Certificate File")
 	Verbose := flag.String("verbose", "true", "Use -verbose=false for disabling streaming output; by default it's true")
 	help := flag.String("help", "Print Help", "Print Help")
 	flag.Parse()
-	if *trapsFolder == "Default" || isFlagPassed(*help) || *output == "Default" || *log == "Default" {
+	if *trapsFolder == "Default" || isFlagPassed(*help) || *log == "Default" {
 		fmt.Println("Wrong Arguments.. Exiting Now")
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
 	trapConfig := h0neytr4p.ParseTraps(*trapsFolder)
-	h0neytr4p.CreateTrapFile(*output)
-	h0neytr4p.CreateLogFile(*log, *Verbose)
+	h0neytr4p.InitLogFile(*log, *Verbose)
 	var ports []string
 	filteredTraps := make(map[string][]h0neytr4p.Trap)
 	c := make(chan os.Signal, 1)
@@ -83,7 +81,7 @@ func main() {
 	}
 	for _, port := range ports {
 		wg.Add(1)
-		go h0neytr4p.StartHandler(port, filteredTraps[port],*cert,*key)
+		go h0neytr4p.StartHandler(port, filteredTraps[port], *cert, *key)
 	}
 	wg.Wait()
 }

@@ -14,6 +14,7 @@ import (
 )
 
 var trapConfigGlobal []Trap
+var trapFlag = "false"
 
 func convertMap(mapInterface map[string]interface{}) map[string]string {
 	mapString := make(map[string]string)
@@ -114,9 +115,16 @@ func allHandler() http.Handler {
 						}
 					}
 					fmt.Println(params)
+					trapFlag = "false"
 					if (CheckHeaders(convertMap(behaviour.Request.Headers), r.Header)) && (CheckParams(convertMap(behaviour.Request.Params), params)) {
-						LogIt(LogEntry{SourceIP: GetIP(r), UserAgent: r.Header.Get("User-Agent"), Timestamp: time.Now().Format(time.RFC3339), Path: r.RequestURI, Trapped: "true"})
-						TrapIt(Attacker{SourceIP: GetIP(r), UserAgent: r.Header.Get("User-Agent"), TrappedFor: trap.Basicinfo.Name, RiskRating: trap.Basicinfo.RiskRating, References: trap.Basicinfo.References, Timestamp: time.Now().Format(time.RFC3339)})
+						trapFlag = "true"
+						LogEntry(LogDetails{SourceIP: GetIP(r),
+							UserAgent: r.Header.Get("User-Agent"),
+							Timestamp: time.Now().Format(time.RFC3339),
+							Path:      r.RequestURI, Trapped: "true",
+							TrappedFor: trap.Basicinfo.Name,
+							RiskRating: trap.Basicinfo.RiskRating,
+							References: trap.Basicinfo.References})
 						// Writing Response according to trap
 						responseHeaders := convertMap(behaviour.Response.Headers)
 						for key, value := range responseHeaders {
@@ -141,18 +149,28 @@ func allHandler() http.Handler {
 				}
 			}
 		}
-		LogIt(LogEntry{SourceIP: GetIP(r), UserAgent: r.Header.Get("User-Agent"), Timestamp: time.Now().Format(time.RFC3339), Path: r.RequestURI, Trapped: "false"})
+		if trapFlag != "true" {
+			LogEntry(LogDetails{SourceIP: GetIP(r),
+				UserAgent: r.Header.Get("User-Agent"),
+				Timestamp: time.Now().Format(time.RFC3339),
+				Path:      r.RequestURI, Trapped: "false",
+				TrappedFor: "",
+				RiskRating: "",
+				References: ""})
+		}
+		trapFlag = "false"
 	})
 }
+
 func StartHandler(port string, trapConfig []Trap, cert string, key string) {
 	r := mux.NewRouter()
 	fmt.Println("[~>] Loaded " + strconv.Itoa(len(trapConfig)) + " traps on Port:" + port + ". Let's get the ball rolling!")
 	trapConfigGlobal = trapConfig
 	// r.HandleFunc("/", allHandler)
 	r.PathPrefix("/").Handler(allHandler())
-	if port == "443"{
+	if port == "443" {
 		log.Fatal(http.ListenAndServeTLS(":"+port, cert, key, r))
-	}else{
+	} else {
 		log.Fatal(http.ListenAndServe(":"+port, r))
 	}
 }
