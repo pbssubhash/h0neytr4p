@@ -38,39 +38,43 @@ h0neytr4p was primarly built to remove the pain of creating a vulnerable applica
 ## How to deploy it? 
 The tool was build on top of Golang which means it can be easily compiled to your server/machine platform and architecture. 
 
-#### To Build from source (if you don't trust us): 
+#### To run with Docker: 
 
 ```
-git clone https://github.com/pbssubhash/h0neytr4p
+git clone https://github.com/t3chn0m4g3/h0neytr4p
 cd h0neytr4p
-go build main.go
-./main -h
+docker compose build
+docker compose up
 
- /$$        /$$$$$$                                  /$$               /$$   /$$
-| $$       /$$$_  $$                                | $$              | $$  | $$
-| $$$$$$$ | $$$$\ $$ /$$$$$$$   /$$$$$$  /$$   /$$ /$$$$$$    /$$$$$$ | $$  | $$  /$$$$$$
-| $$__  $$| $$ $$ $$| $$__  $$ /$$__  $$| $$  | $$|_  $$_/   /$$__  $$| $$$$$$$$ /$$__  $$
-| $$  \ $$| $$\ $$$$| $$  \ $$| $$$$$$$$| $$  | $$  | $$    | $$  \__/|_____  $$| $$  \ $$
-| $$  | $$| $$ \ $$$| $$  | $$| $$_____/| $$  | $$  | $$ /$$| $$            | $$| $$  | $$
-| $$  | $$|  $$$$$$/| $$  | $$|  $$$$$$$|  $$$$$$$  |  $$$$/| $$            | $$| $$$$$$$/
-|__/  |__/ \______/ |__/  |__/ \_______/ \____  $$   \___/  |__/            |__/| $$____/
-                                         /$$  | $$                              | $$
-       Built by a Red team, with <3     |  $$$$$$/                              | $$
-             h0neytr4p v0.1             \______/                               |__/
-        Built by zer0p1k4chu & g0dsky
-    https://github.com/pbssubhash/h0neyt4p
-
-Wrong Arguments.. Exiting Now
-  -help string
-        Print Help (default "Print Help")
-  -log string
-        Log file - It's a string. (default "Default")
-  -output string
-        Output file - It's a string. (default "Default")
-  -traps string
-        Traps folder - It's a string. (default "Default")
-  -verbose string
-        Use -verbose=false for disabling streaming output; by default it's true (default "true")
+h0neytr4p  |
+h0neytr4p  |  /$$        /$$$$$$                                  /$$               /$$   /$$
+h0neytr4p  | | $$       /$$$_  $$                                | $$              | $$  | $$
+h0neytr4p  | | $$$$$$$ | $$$$\ $$ /$$$$$$$   /$$$$$$  /$$   /$$ /$$$$$$    /$$$$$$ | $$  | $$  /$$$$$$
+h0neytr4p  | | $$__  $$| $$ $$ $$| $$__  $$ /$$__  $$| $$  | $$|_  $$_/   /$$__  $$| $$$$$$$$ /$$__  $$
+h0neytr4p  | | $$  \ $$| $$\ $$$$| $$  \ $$| $$$$$$$$| $$  | $$  | $$    | $$  \__/|_____  $$| $$  \ $$
+h0neytr4p  | | $$  | $$| $$ \ $$$| $$  | $$| $$_____/| $$  | $$  | $$ /$$| $$            | $$| $$  | $$
+h0neytr4p  | | $$  | $$|  $$$$$$/| $$  | $$|  $$$$$$$|  $$$$$$$  |  $$$$/| $$            | $$| $$$$$$$/
+h0neytr4p  | |__/  |__/ \______/ |__/  |__/ \_______/ \____  $$   \___/  |__/            |__/| $$____/
+h0neytr4p  |                                         /$$  | $$                               | $$
+h0neytr4p  |                                        |  $$$$$$/                [ v0.2 ]       | $$
+h0neytr4p  |                                         \______/                                |__/
+h0neytr4p  | Built by a Red team, with <3
+h0neytr4p  | Built by zer0p1k4chu & g0dsky (https://github.com/pbssubhash/h0neytr4p)
+h0neytr4p  | Adjusted for T-Pot by t3chn0m4g3 (https://github.com/t3chn0m4g3/h0neytr4p)
+h0neytr4p  | 	
+h0neytr4p  | Usage of ./h0neytr4p:
+h0neytr4p  |   -cert string
+h0neytr4p  |     	Certificate File (default "Default")
+h0neytr4p  |   -help string
+h0neytr4p  |     	Print Help (default "Print Help")
+h0neytr4p  |   -key string
+h0neytr4p  |     	Certificate File (default "Default")
+h0neytr4p  |   -log string
+h0neytr4p  |     	Log file - It's a string. (default "Default")
+h0neytr4p  |   -traps string
+h0neytr4p  |     	Traps folder - It's a string. (default "Default")
+h0neytr4p  |   -verbose string
+h0neytr4p  |     	Use -verbose=false for disabling streaming output; by default it's true (default "true")
 ```
 
 
