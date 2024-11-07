@@ -81,7 +81,11 @@ func GetIP(r *http.Request) string {
 	if forwarded != "" {
 		return forwarded
 	}
-	return r.RemoteAddr
+	ip := r.RemoteAddr
+	if colonIndex := strings.LastIndex(ip, ":"); colonIndex != -1 {
+		ip = ip[:colonIndex] // Remove port if present
+	}
+	return ip
 }
 
 func GetPort(r *http.Request) string {
@@ -181,8 +185,6 @@ func allHandler(trapConfig []Trap) http.Handler {
 							"user-agent_os":      ua.Os.Family,
 							"trapped":            "true",
 							"trapped_for":        trap.Basicinfo.Name,
-							"risk_rating":        trap.Basicinfo.RiskRating,
-							"references":         trap.Basicinfo.References,
 							"user-agent":         r.Header.Get("User-Agent"),
 						}
 						for key, value := range GetFlatHeaders(r) {
@@ -202,6 +204,12 @@ func allHandler(trapConfig []Trap) http.Handler {
 						}
 						if ua.Os.Major != "" || ua.Os.Minor != "" {
 							details["user-agent_os_version"] = fmt.Sprintf("%s.%s", ua.Os.Major, ua.Os.Minor)
+						}
+						if trap.Basicinfo.RiskRating != "" {
+							details["trapped_risk_rating"] = trap.Basicinfo.RiskRating
+						}
+						if trap.Basicinfo.References != "" {
+							details["trapped_references"] = trap.Basicinfo.References
 						}
 						LogEntry(details)
 						// Writing Response according to trap

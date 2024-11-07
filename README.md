@@ -46,35 +46,23 @@ cd h0neytr4p
 docker compose build
 docker compose up
 
-h0neytr4p  |
-h0neytr4p  |  /$$        /$$$$$$                                  /$$               /$$   /$$
-h0neytr4p  | | $$       /$$$_  $$                                | $$              | $$  | $$
-h0neytr4p  | | $$$$$$$ | $$$$\ $$ /$$$$$$$   /$$$$$$  /$$   /$$ /$$$$$$    /$$$$$$ | $$  | $$  /$$$$$$
-h0neytr4p  | | $$__  $$| $$ $$ $$| $$__  $$ /$$__  $$| $$  | $$|_  $$_/   /$$__  $$| $$$$$$$$ /$$__  $$
-h0neytr4p  | | $$  \ $$| $$\ $$$$| $$  \ $$| $$$$$$$$| $$  | $$  | $$    | $$  \__/|_____  $$| $$  \ $$
-h0neytr4p  | | $$  | $$| $$ \ $$$| $$  | $$| $$_____/| $$  | $$  | $$ /$$| $$            | $$| $$  | $$
-h0neytr4p  | | $$  | $$|  $$$$$$/| $$  | $$|  $$$$$$$|  $$$$$$$  |  $$$$/| $$            | $$| $$$$$$$/
-h0neytr4p  | |__/  |__/ \______/ |__/  |__/ \_______/ \____  $$   \___/  |__/            |__/| $$____/
-h0neytr4p  |                                         /$$  | $$                               | $$
-h0neytr4p  |                                        |  $$$$$$/                [ v0.2 ]       | $$
-h0neytr4p  |                                         \______/                                |__/
-h0neytr4p  | Built by a Red team, with <3
-h0neytr4p  | Built by zer0p1k4chu & g0dsky (https://github.com/pbssubhash/h0neytr4p)
-h0neytr4p  | Adjusted for T-Pot by t3chn0m4g3 (https://github.com/t3chn0m4g3/h0neytr4p)
-h0neytr4p  | 	
-h0neytr4p  | Usage of ./h0neytr4p:
-h0neytr4p  |   -cert string
-h0neytr4p  |     	Certificate File (default "Default")
-h0neytr4p  |   -help string
-h0neytr4p  |     	Print Help (default "Print Help")
-h0neytr4p  |   -key string
-h0neytr4p  |     	Certificate File (default "Default")
-h0neytr4p  |   -log string
-h0neytr4p  |     	Log file - It's a string. (default "Default")
-h0neytr4p  |   -traps string
-h0neytr4p  |     	Traps folder - It's a string. (default "Default")
-h0neytr4p  |   -verbose string
-h0neytr4p  |     	Use -verbose=false for disabling streaming output; by default it's true (default "true")
+  /$$        /$$$$$$                                  /$$               /$$   /$$
+ | $$       /$$$_  $$                                | $$              | $$  | $$
+ | $$$$$$$ | $$$$\ $$ /$$$$$$$   /$$$$$$  /$$   /$$ /$$$$$$    /$$$$$$ | $$  | $$  /$$$$$$
+ | $$__  $$| $$ $$ $$| $$__  $$ /$$__  $$| $$  | $$|_  $$_/   /$$__  $$| $$$$$$$$ /$$__  $$
+ | $$  \ $$| $$\ $$$$| $$  \ $$| $$$$$$$$| $$  | $$  | $$    | $$  \__/|_____  $$| $$  \ $$
+ | $$  | $$| $$ \ $$$| $$  | $$| $$_____/| $$  | $$  | $$ /$$| $$            | $$| $$  | $$
+ | $$  | $$|  $$$$$$/| $$  | $$|  $$$$$$$|  $$$$$$$  |  $$$$/| $$            | $$| $$$$$$$/
+ |__/  |__/ \______/ |__/  |__/ \_______/ \____  $$   \___/  |__/            |__/| $$____/
+                                         /$$  | $$                               | $$
+                                        |  $$$$$$/                [ v0.2 ]       | $$
+                                         \______/                                |__/
+ Built by a Red team, with <3
+ Built by zer0p1k4chu & g0dsky (https://github.com/pbssubhash/h0neytr4p)
+ Adjusted for T-Pot by t3chn0m4g3 (https://github.com/t3chn0m4g3/h0neytr4p)
+ 	
+ Logging is configured and ready.
+ [~>] Loaded 31 traps on Port:443. Let's get the ball rolling!
 ```
 
 
@@ -97,7 +85,6 @@ Please open an issue at [Issues](https://github.com/pbssubhash/h0neytr4p/issues/
 
 ## TO-DO:
 <ol>
- <li> Enable HTTPS </li>
  <li> Push more traps to prod </li>
  <li> Nice wiki </li> 
 </ol>
