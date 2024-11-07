@@ -1,5 +1,0 @@
-SourceIP,UserAgent,Timestamp,Path,Trapped
-192.168.1.192:35792,Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.2117.157 Safari/537.36,2021-05-26T19:46:37+05:30,/index.php,true
-192.168.1.192:35792,Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.2117.157 Safari/537.36,2021-05-26T19:46:37+05:30,/index.php,false
-192.168.1.192:35794,Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.2117.157 Safari/537.36,2021-05-26T19:46:38+05:30,/index.php,true
-192.168.1.192:35794,Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.2117.157 Safari/537.36,2021-05-26T19:46:38+05:30,/index.php,false

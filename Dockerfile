@@ -3,8 +3,9 @@ WORKDIR /app
 #
 COPY . .
 #
-RUN apk -U add openssl
+RUN apk -U add git openssl
 RUN go mod download
+RUN go mod tidy
 RUN go build -o /app/main
 #
 RUN openssl req \
@@ -25,5 +26,5 @@ COPY --from=builder /app/app.key /opt/h0neytr4p/
 COPY --from=builder /app/app.crt /opt/h0neytr4p/
 #
 WORKDIR /opt/h0neytr4p
-CMD ["-cert=app.crt", "-key=app.key", "-log=log/log.csv", "-traps=traps/"]
+CMD ["-cert=app.crt", "-key=app.key", "-log=log/log.json", "-traps=traps/"]
 ENTRYPOINT ["./h0neytr4p"]

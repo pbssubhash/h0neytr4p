@@ -1,12 +1,13 @@
 package h0neytr4p
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 )
 
-// Initialize log file with a unified header
+// Initialize log file
 func InitLogFile(filename string, verbose string) {
 	var err error
 	logFile, err = os.Create(filename)
@@ -15,34 +16,28 @@ func InitLogFile(filename string, verbose string) {
 		log.Fatalln("Error creating the log file:", err)
 		os.Exit(1)
 	}
-
-	// Unified CSV header for both types of log entries
-	fmt.Fprintln(logFile, "SourceIP,UserAgent,Timestamp,Path,Trapped,TrappedFor,RiskRating,References")
 	fmt.Println("Logging is configured and ready.")
 }
 
-// Unified logging function
-func LogEntry(details LogDetails) bool {
+func LogEntry(details map[string]string) bool {
 	logFileMutex.Lock()
 	defer logFileMutex.Unlock()
 
-	// Format the log entry line
-	entry := fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s,%s",
-		details.SourceIP,
-		details.UserAgent,
-		details.Timestamp,
-		details.Path,
-		details.Trapped,
-		details.TrappedFor,
-		details.RiskRating,
-		details.References,
-	)
-
-	// Write to file and print to console if verbose mode is enabled
-	fmt.Fprintln(logFile, entry)
-	if Verbose == "true" {
-		fmt.Println("[" + details.Timestamp + "] Path: " + details.Path + "; Trapped: " + details.Trapped)
+	// Convert log details to JSON
+	entryJSON, err := json.Marshal(details)
+	if err != nil {
+		log.Println("Error marshalling log entry to JSON:", err)
+		return false
 	}
+
+	// Write JSON log entry to file
+	fmt.Fprintln(logFile, string(entryJSON))
+
+	// Print to console if verbose mode is enabled
+	if Verbose == "true" {
+		fmt.Printf("[%s] [Path: %s] [Trapped: %s]\n", details["timestamp"], details["request_uri"], details["trapped"])
+	}
+
 	logFile.Sync()
 	return true
 }

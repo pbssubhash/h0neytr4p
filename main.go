@@ -20,11 +20,12 @@ func PrintBanner() {
 | $$  | $$| $$ \ $$$| $$  | $$| $$_____/| $$  | $$  | $$ /$$| $$            | $$| $$  | $$
 | $$  | $$|  $$$$$$/| $$  | $$|  $$$$$$$|  $$$$$$$  |  $$$$/| $$            | $$| $$$$$$$/
 |__/  |__/ \______/ |__/  |__/ \_______/ \____  $$   \___/  |__/            |__/| $$____/ 
-                                         /$$  | $$                              | $$      
-       Built by a Red team, with <3     |  $$$$$$/                              | $$      
-             h0neytr4p v0.1             \______/                               |__/      
-        Built by zer0p1k4chu & g0dsky
-    https://github.com/pbssubhash/h0neytr4p
+                                        /$$  | $$                               | $$      
+                                       |  $$$$$$/                [ v0.2 ]       | $$      
+                                        \______/                                |__/      
+Built by a Red team, with <3
+Built by zer0p1k4chu & g0dsky (https://github.com/pbssubhash/h0neytr4p)
+Adjusted for T-Pot by t3chn0m4g3 (https://github.com/t3chn0m4g3/h0neytr4p)
 	`)
 }
 

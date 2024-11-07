@@ -9,6 +9,15 @@ Rule Contributors:
 
 <br>
 
+## Adjusted for T-Pot
+
+h0neytr4p has been revised for T-Pot:
+- Add Docker support (Dockerfile, docker-compose.yml)
+- Use a single logfile instead of two
+- Log to JSON instead of CSV
+- Enrich log file with more info (i.e. Cookies, Headers, Destination Port)
+- Improve trap support on different ports
+
 ## What is h0neytr4p? 
 
 Honeytrap (a.k.a h0neytr4p) is an easy to configure, deploy honeypot for protecting against web recon and exploiting. 

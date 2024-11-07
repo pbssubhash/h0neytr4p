@@ -5,17 +5,6 @@ import (
 	"sync"
 )
 
-type LogDetails struct {
-	SourceIP   string
-	UserAgent  string
-	Timestamp  string
-	Path       string
-	Trapped    string
-	TrappedFor string
-	RiskRating string
-	References string
-}
-
 type Trap struct {
 	Basicinfo struct {
 		Name            string `json:"Name"`
