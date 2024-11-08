@@ -1,7 +1,7 @@
 services:
   h0neytr4p:
     build: .
-    image: dtagdevsec/h0neytr4p:testing
+    image: h0neytr4p:latest
     read_only: true
     container_name: h0neytr4p
     restart: always
@@ -10,3 +10,5 @@ services:
       - "80:80"
     volumes:
       - ./log/:/opt/h0neytr4p/log/
+      - ./payloads/:/opt/h0neytr4p/payloads/
+

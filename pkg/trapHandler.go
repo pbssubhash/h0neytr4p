@@ -19,6 +19,16 @@ func InitLogFile(filename string, verbose string) {
 	fmt.Println("Logging is configured and ready.")
 }
 
+// Initialize payload folder
+func InitPayloadFolder(folder string, verbose string) {
+	payloadFolder = folder
+	if err := os.MkdirAll(folder, os.ModePerm); err != nil {
+		log.Fatalln("Error creating payload folder: ", err)
+		os.Exit(1)
+	}
+	fmt.Println("Payload folder is configured and ready.")
+}
+
 func LogEntry(details map[string]string) bool {
 	logFileMutex.Lock()
 	defer logFileMutex.Unlock()

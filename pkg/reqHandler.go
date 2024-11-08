@@ -1,10 +1,14 @@
 package h0neytr4p
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -18,6 +22,11 @@ var uaParser *uaparser.Parser
 
 func init() {
 	uaParser = uaparser.NewFromSaved() // Loads the default regexes
+}
+
+func computeMD5(data []byte) string {
+	hash := md5.Sum(data)
+	return hex.EncodeToString(hash[:])
 }
 
 func convertMap(mapInterface map[string]interface{}) map[string]string {
@@ -114,6 +123,88 @@ func allHandler(trapConfig []Trap) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		trapFlag := "false"
 		ua := uaParser.Parse(r.Header.Get("User-Agent"))
+		var payloadData, payloadParameter, payloadHashMD5, payloadFilename, payloadMimeType string
+
+		if r.ContentLength > MaxFormSize {
+			log.Printf("File size %d exceeds the allowed limit of %d bytes", r.ContentLength, MaxFormSize)
+			// http.Error(w, "File too large", http.StatusRequestEntityTooLarge)
+			return
+		}
+
+		// Check for and capture payload (data)
+		if r.Method == "POST" || r.Method == "PUT" || r.Method == "DELETE" {
+			if strings.Contains(r.Header.Get("Content-Type"), "application/json") {
+				bodyBytes, err := ioutil.ReadAll(r.Body)
+				if err != nil {
+					log.Printf("Error reading JSON body: %v", err)
+				} else {
+					payloadData = string(bodyBytes)
+				}
+			} else if strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data") {
+				err := r.ParseMultipartForm(MaxFormSize)
+				if err != nil {
+					log.Printf("Error parsing multipart form: %v", err)
+					return
+				}
+				// Process form fields
+				for key, values := range r.MultipartForm.Value {
+					if key != "file" { // Exclude "file" field from payloadParameter
+						if len(payloadParameter) > 0 {
+							payloadParameter += ","
+						}
+						payloadParameter += fmt.Sprintf("%s=%s", key, strings.Join(values, "|"))
+					}
+				}
+				// Process files separately
+				for _, files := range r.MultipartForm.File {
+					for _, fileHeader := range files {
+						file, err := fileHeader.Open()
+						if err != nil {
+							log.Printf("Error opening file: %v", err)
+							continue
+						}
+						defer file.Close()
+
+						fileBytes, err := ioutil.ReadAll(io.LimitReader(file, MaxFormSize))
+						if err != nil {
+							log.Printf("Error reading file: %v", err)
+							continue
+						}
+
+						// Hash and save the file
+						payloadHashMD5 = computeMD5(fileBytes)
+						payloadFilename = filepath.Join(payloadFolder, payloadHashMD5)
+						payloadMimeType = fileHeader.Header.Get("Content-Type")
+
+						if err := ioutil.WriteFile(payloadFilename, fileBytes, 0770); err != nil {
+							log.Printf("Error saving file: %v", err)
+							continue
+						}
+					}
+				}
+			} else if strings.Contains(r.Header.Get("Content-Type"), "application/x-www-form-urlencoded") {
+				// Handle URL-encoded form data
+				if err := r.ParseForm(); err != nil {
+					log.Printf("Error parsing form data: %v", err)
+				} else {
+					for key, values := range r.Form {
+						if len(payloadData) > 0 {
+							payloadData += ","
+						}
+						payloadData += fmt.Sprintf("%s=%s", key, strings.Join(values, "|"))
+					}
+				}
+			} else if r.Header.Get("Content-Type") == "text/plain" {
+				// Handle plain text body
+				bodyBytes, err := ioutil.ReadAll(r.Body)
+				if err != nil {
+					log.Printf("Error reading text body: %v", err)
+				} else {
+					payloadData = string(bodyBytes)
+				}
+			}
+		}
+
 		for _, trap := range trapConfig {
 			for _, behaviour := range trap.Behaviour {
 				params := make(map[string]string)
@@ -187,6 +278,17 @@ func allHandler(trapConfig []Trap) http.Handler {
 							"trapped_for":        trap.Basicinfo.Name,
 							"user-agent":         r.Header.Get("User-Agent"),
 						}
+						if payloadParameter != "" {
+							details["payload_parameter"] = payloadParameter
+						}
+						if payloadHashMD5 != "" {
+							details["payload_hash_md5"] = payloadHashMD5
+							details["payload_filename"] = payloadFilename
+							details["payload_mime_type"] = payloadMimeType
+						}
+						if payloadData != "" {
+							details["payload"] = payloadData
+						}
 						for key, value := range GetFlatHeaders(r) {
 							details[key] = value
 						}
@@ -249,6 +351,17 @@ func allHandler(trapConfig []Trap) http.Handler {
 				"user-agent_os":      ua.Os.Family,
 				"trapped":            "false",
 				"user-agent":         r.Header.Get("User-Agent"),
+			}
+			if payloadParameter != "" {
+				details["payload_parameter"] = payloadParameter
+			}
+			if payloadHashMD5 != "" {
+				details["payload_hash_md5"] = payloadHashMD5
+				details["payload_filename"] = payloadFilename
+				details["payload_mime_type"] = payloadMimeType
+			}
+			if payloadData != "" {
+				details["payload"] = payloadData
 			}
 			for key, value := range GetFlatHeaders(r) {
 				details[key] = value

@@ -32,8 +32,11 @@ type Trap struct {
 	} `json:"Behaviour"`
 }
 
+const MaxFormSize = 101 * 1024 // 101KB
+
 var (
-	logFile      *os.File
-	Verbose      string
-	logFileMutex sync.Mutex
+	logFile       *os.File
+	logFileMutex  sync.Mutex
+	payloadFolder string
+	Verbose       string
 )

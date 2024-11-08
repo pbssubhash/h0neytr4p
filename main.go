@@ -21,7 +21,7 @@ func PrintBanner() {
 | $$  | $$|  $$$$$$/| $$  | $$|  $$$$$$$|  $$$$$$$  |  $$$$/| $$            | $$| $$$$$$$/
 |__/  |__/ \______/ |__/  |__/ \_______/ \____  $$   \___/  |__/            |__/| $$____/ 
                                         /$$  | $$                               | $$      
-                                       |  $$$$$$/                [ v0.2 ]       | $$      
+                                       |  $$$$$$/                [ v0.3 ]       | $$      
                                         \______/                                |__/      
 Built by a Red team, with <3
 Built by zer0p1k4chu & g0dsky (https://github.com/pbssubhash/h0neytr4p)
@@ -44,18 +44,20 @@ func main() {
 	var wg sync.WaitGroup
 	trapsFolder := flag.String("traps", "Default", "Traps folder - It's a string.")
 	log := flag.String("log", "Default", "Log file - It's a string.")
+	payload := flag.String("payload", "Default", "Payload folder - It's a string.")
 	cert := flag.String("cert", "Default", "Certificate File")
 	key := flag.String("key", "Default", "Certificate File")
 	Verbose := flag.String("verbose", "true", "Use -verbose=false for disabling streaming output; by default it's true")
 	help := flag.String("help", "Print Help", "Print Help")
 	flag.Parse()
-	if *trapsFolder == "Default" || isFlagPassed(*help) || *log == "Default" {
+	if *trapsFolder == "Default" || isFlagPassed(*help) || *log == "Default" || *payload == "Default" {
 		fmt.Println("Wrong Arguments.. Exiting Now")
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
 	trapConfig := h0neytr4p.ParseTraps(*trapsFolder)
 	h0neytr4p.InitLogFile(*log, *Verbose)
+	h0neytr4p.InitPayloadFolder(*payload, *Verbose)
 	var ports []string
 	filteredTraps := make(map[string][]h0neytr4p.Trap)
 	c := make(chan os.Signal, 1)

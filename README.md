@@ -5,9 +5,8 @@ Authors: <br>
 - Subhash; [Twitter](https://twitter.com/pbssubhash) | [LinkedIn](https://in.linkedin.com/in/pbssubhash) <br>
 
 Rule Contributors: 
-- Aakash; [Twitter](https://twitter.com/me_godsky) | [LinkedIn](https://in.linkedin.com/in/aakashmadaan13) <br> 
+- Aakash; [Twitter](https://twitter.com/me_godsky) | [LinkedIn](https://in.linkedin.com/in/aakashmadaan13) <br><br> 
 
-<br>
 
 ## Adjusted for T-Pot
 
@@ -17,6 +16,7 @@ h0neytr4p has been revised for T-Pot:
 - Log to JSON instead of CSV
 - Enrich log file with more info (i.e. Cookies, Headers, Destination Port)
 - Improve trap support on different ports
+- Add payload handler (store payloads in payload folder)
 
 ## What is h0neytr4p? 
 
@@ -55,13 +55,14 @@ docker compose up
  | $$  | $$|  $$$$$$/| $$  | $$|  $$$$$$$|  $$$$$$$  |  $$$$/| $$            | $$| $$$$$$$/
  |__/  |__/ \______/ |__/  |__/ \_______/ \____  $$   \___/  |__/            |__/| $$____/
                                          /$$  | $$                               | $$
-                                        |  $$$$$$/                [ v0.2 ]       | $$
+                                        |  $$$$$$/                [ v0.3 ]       | $$
                                          \______/                                |__/
  Built by a Red team, with <3
  Built by zer0p1k4chu & g0dsky (https://github.com/pbssubhash/h0neytr4p)
  Adjusted for T-Pot by t3chn0m4g3 (https://github.com/t3chn0m4g3/h0neytr4p)
  	
  Logging is configured and ready.
+ Payload folder is configured and ready.
  [~>] Loaded 31 traps on Port:443. Let's get the ball rolling!
 ```
 
