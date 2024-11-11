@@ -16,7 +16,7 @@ h0neytr4p has been revised for T-Pot:
 - Log to JSON instead of CSV
 - Enrich log file with more info (i.e. Cookies, Headers, Destination Port)
 - Improve trap support on different ports
-- Add payload handler (store payloads in payload folder)
+- Add payload handler (store payloads in payload folder) with pre-defined sizeLimit(s)
 
 ## What is h0neytr4p? 
 

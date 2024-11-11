@@ -124,9 +124,25 @@ func allHandler(trapConfig []Trap) http.Handler {
 		trapFlag := "false"
 		ua := uaParser.Parse(r.Header.Get("User-Agent"))
 		var payloadData, payloadParameter, payloadHashMD5, payloadFilename, payloadMimeType string
+		var sizeLimit int64
 
-		if r.ContentLength > MaxFormSize {
-			log.Printf("File size %d exceeds the allowed limit of %d bytes", r.ContentLength, MaxFormSize)
+		// Determine size limit based on Content-Type
+		switch {
+		case strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data"):
+			fmt.Println("checkpoint1")
+			sizeLimit = MaxMultipartSize
+		case strings.Contains(r.Header.Get("Content-Type"), "application/json"),
+			strings.Contains(r.Header.Get("Content-Type"), "text/plain"),
+			strings.Contains(r.Header.Get("Content-Type"), "application/x-www-form-urlencoded"):
+			sizeLimit = MaxJSONFormSize
+		default:
+			// Default limit for other types if needed
+			sizeLimit = MaxJSONFormSize
+		}
+
+		if r.ContentLength > sizeLimit {
+			log.Printf("File size %d exceeds the allowed limit of %d bytes", r.ContentLength, sizeLimit)
+			// Just for casual testing ...
 			// http.Error(w, "File too large", http.StatusRequestEntityTooLarge)
 			return
 		}
@@ -134,21 +150,21 @@ func allHandler(trapConfig []Trap) http.Handler {
 		// Check for and capture payload (data)
 		if r.Method == "POST" || r.Method == "PUT" || r.Method == "DELETE" {
 			if strings.Contains(r.Header.Get("Content-Type"), "application/json") {
-				bodyBytes, err := ioutil.ReadAll(r.Body)
+				bodyBytes, err := ioutil.ReadAll(io.LimitReader(r.Body, sizeLimit))
 				if err != nil {
 					log.Printf("Error reading JSON body: %v", err)
 				} else {
 					payloadData = string(bodyBytes)
 				}
 			} else if strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data") {
-				err := r.ParseMultipartForm(MaxFormSize)
+				err := r.ParseMultipartForm(sizeLimit)
 				if err != nil {
 					log.Printf("Error parsing multipart form: %v", err)
 					return
 				}
-				// Process form fields
+				// Process form fields, but exclude "file" field
 				for key, values := range r.MultipartForm.Value {
-					if key != "file" { // Exclude "file" field from payloadParameter
+					if key != "file" {
 						if len(payloadParameter) > 0 {
 							payloadParameter += ","
 						}
@@ -165,7 +181,7 @@ func allHandler(trapConfig []Trap) http.Handler {
 						}
 						defer file.Close()
 
-						fileBytes, err := ioutil.ReadAll(io.LimitReader(file, MaxFormSize))
+						fileBytes, err := ioutil.ReadAll(io.LimitReader(file, sizeLimit))
 						if err != nil {
 							log.Printf("Error reading file: %v", err)
 							continue

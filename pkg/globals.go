@@ -32,7 +32,10 @@ type Trap struct {
 	} `json:"Behaviour"`
 }
 
-const MaxFormSize = 101 * 1024 // 101KB
+const (
+	MaxMultipartSize = 101 * 1024 // 101KB
+	MaxJSONFormSize  = 11 * 1024  // 11KB
+)
 
 var (
 	logFile       *os.File
