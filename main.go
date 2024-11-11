@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"sync"
 
-	h0neytr4p "github.com/pbssubhash/h0neytr4p"
+	h0neytr4p "github.com/t3chn0m4g3/h0neytr4p"
 )
 
 func PrintBanner() {
@@ -56,6 +56,13 @@ func main() {
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
+	fmt.Printf("[ Traps folder            ] -> [ %-30s]\n", *trapsFolder)
+	fmt.Printf("[ Logfile                 ] -> [ %-30s]\n", *log)
+	fmt.Printf("[ Payloads folder         ] -> [ %-30s]\n", *payload)
+	fmt.Printf("[ Catch all payloads      ] -> [ %-30s]\n", *catchall)
+	fmt.Printf("[ Payload multipart limit ] -> [ %-30d]\n", h0neytr4p.MaxMultipartSize)
+	fmt.Printf("[ Payload other limit     ] -> [ %-30d]\n", h0neytr4p.MaxJSONFormSize)
+	fmt.Println()
 	trapConfig := h0neytr4p.ParseTraps(*trapsFolder)
 	h0neytr4p.InitLogFile(*log, *Verbose)
 	h0neytr4p.InitPayloadFolder(*payload, *Verbose)
