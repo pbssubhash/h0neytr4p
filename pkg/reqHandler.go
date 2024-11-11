@@ -119,108 +119,124 @@ func GetProtocol(r *http.Request) string {
 }
 
 // Passing `trapConfig` parameter so each instance can handle its own traps independently.
-func allHandler(trapConfig []Trap) http.Handler {
+func allHandler(trapConfig []Trap, catchall string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		trapFlag := "false"
 		ua := uaParser.Parse(r.Header.Get("User-Agent"))
 		var payloadData, payloadParameter, payloadHashMD5, payloadFilename, payloadMimeType string
 		var sizeLimit int64
+		var isMatchedPath bool
 
-		// Determine size limit based on Content-Type
-		switch {
-		case strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data"):
-			fmt.Println("checkpoint1")
-			sizeLimit = MaxMultipartSize
-		case strings.Contains(r.Header.Get("Content-Type"), "application/json"),
-			strings.Contains(r.Header.Get("Content-Type"), "text/plain"),
-			strings.Contains(r.Header.Get("Content-Type"), "application/x-www-form-urlencoded"):
-			sizeLimit = MaxJSONFormSize
-		default:
-			// Default limit for other types if needed
-			sizeLimit = MaxJSONFormSize
-		}
-
-		if r.ContentLength > sizeLimit {
-			log.Printf("File size %d exceeds the allowed limit of %d bytes", r.ContentLength, sizeLimit)
-			// Just for casual testing ...
-			// http.Error(w, "File too large", http.StatusRequestEntityTooLarge)
-			return
-		}
-
-		// Check for and capture payload (data)
-		if r.Method == "POST" || r.Method == "PUT" || r.Method == "DELETE" {
-			if strings.Contains(r.Header.Get("Content-Type"), "application/json") {
-				bodyBytes, err := ioutil.ReadAll(io.LimitReader(r.Body, sizeLimit))
-				if err != nil {
-					log.Printf("Error reading JSON body: %v", err)
-				} else {
-					payloadData = string(bodyBytes)
+		// Check if request URL matches any URL in trapConfig
+		for _, trap := range trapConfig {
+			for _, behaviour := range trap.Behaviour {
+				if match(behaviour.Request.URL, r.URL.Path) {
+					isMatchedPath = true
+					break
 				}
-			} else if strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data") {
-				err := r.ParseMultipartForm(sizeLimit)
-				if err != nil {
-					log.Printf("Error parsing multipart form: %v", err)
-					return
-				}
-				// Process form fields, but exclude "file" field
-				for key, values := range r.MultipartForm.Value {
-					if key != "file" {
-						if len(payloadParameter) > 0 {
-							payloadParameter += ","
-						}
-						payloadParameter += fmt.Sprintf("%s=%s", key, strings.Join(values, "|"))
-					}
-				}
-				// Process files separately
-				for _, files := range r.MultipartForm.File {
-					for _, fileHeader := range files {
-						file, err := fileHeader.Open()
-						if err != nil {
-							log.Printf("Error opening file: %v", err)
-							continue
-						}
-						defer file.Close()
-
-						fileBytes, err := ioutil.ReadAll(io.LimitReader(file, sizeLimit))
-						if err != nil {
-							log.Printf("Error reading file: %v", err)
-							continue
-						}
-
-						// Hash and save the file
-						payloadHashMD5 = computeMD5(fileBytes)
-						payloadFilename = filepath.Join(payloadFolder, payloadHashMD5)
-						payloadMimeType = fileHeader.Header.Get("Content-Type")
-
-						if err := ioutil.WriteFile(payloadFilename, fileBytes, 0770); err != nil {
-							log.Printf("Error saving file: %v", err)
-							continue
-						}
-					}
-				}
-			} else if strings.Contains(r.Header.Get("Content-Type"), "application/x-www-form-urlencoded") {
-				// Handle URL-encoded form data
-				if err := r.ParseForm(); err != nil {
-					log.Printf("Error parsing form data: %v", err)
-				} else {
-					for key, values := range r.Form {
-						if len(payloadData) > 0 {
-							payloadData += ","
-						}
-						payloadData += fmt.Sprintf("%s=%s", key, strings.Join(values, "|"))
-					}
-				}
-			} else if r.Header.Get("Content-Type") == "text/plain" {
-				// Handle plain text body
-				bodyBytes, err := ioutil.ReadAll(r.Body)
-				if err != nil {
-					log.Printf("Error reading text body: %v", err)
-				} else {
-					payloadData = string(bodyBytes)
-				}
+			}
+			if isMatchedPath {
+				break
 			}
 		}
 
+		// Only process payload if request URL is matched in trapConfig (signatures)
+		if isMatchedPath || catchall == "true" {
+			// Determine size limit based on Content-Type
+			switch {
+			case strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data"):
+				sizeLimit = MaxMultipartSize
+			case strings.Contains(r.Header.Get("Content-Type"), "application/json"),
+				strings.Contains(r.Header.Get("Content-Type"), "text/plain"),
+				strings.Contains(r.Header.Get("Content-Type"), "application/x-www-form-urlencoded"):
+				sizeLimit = MaxJSONFormSize
+			default:
+				// Default limit for other types if needed
+				sizeLimit = MaxJSONFormSize
+			}
+
+			if r.ContentLength > sizeLimit {
+				log.Printf("File size %d exceeds the allowed limit of %d bytes", r.ContentLength, sizeLimit)
+				// Just for casual testing ...
+				// http.Error(w, "File too large", http.StatusRequestEntityTooLarge)
+				return
+			}
+
+			// Check for and capture payload (data)
+			if r.Method == "POST" || r.Method == "PUT" || r.Method == "DELETE" {
+				if strings.Contains(r.Header.Get("Content-Type"), "application/json") {
+					bodyBytes, err := ioutil.ReadAll(io.LimitReader(r.Body, sizeLimit))
+					if err != nil {
+						log.Printf("Error reading JSON body: %v", err)
+					} else {
+						payloadData = string(bodyBytes)
+					}
+				} else if strings.Contains(r.Header.Get("Content-Type"), "multipart/form-data") {
+					err := r.ParseMultipartForm(sizeLimit)
+					if err != nil {
+						log.Printf("Error parsing multipart form: %v", err)
+						return
+					}
+					// Process form fields, but exclude "file" field
+					for key, values := range r.MultipartForm.Value {
+						if key != "file" {
+							if len(payloadParameter) > 0 {
+								payloadParameter += ","
+							}
+							payloadParameter += fmt.Sprintf("%s=%s", key, strings.Join(values, "|"))
+						}
+					}
+					// Process files separately
+					for _, files := range r.MultipartForm.File {
+						for _, fileHeader := range files {
+							file, err := fileHeader.Open()
+							if err != nil {
+								log.Printf("Error opening file: %v", err)
+								continue
+							}
+							defer file.Close()
+
+							fileBytes, err := ioutil.ReadAll(io.LimitReader(file, sizeLimit))
+							if err != nil {
+								log.Printf("Error reading file: %v", err)
+								continue
+							}
+
+							// Hash and save the file
+							payloadHashMD5 = computeMD5(fileBytes)
+							payloadFilename = filepath.Join(payloadFolder, payloadHashMD5)
+							payloadMimeType = fileHeader.Header.Get("Content-Type")
+
+							if err := ioutil.WriteFile(payloadFilename, fileBytes, 0770); err != nil {
+								log.Printf("Error saving file: %v", err)
+								continue
+							}
+						}
+					}
+				} else if strings.Contains(r.Header.Get("Content-Type"), "application/x-www-form-urlencoded") {
+					// Handle URL-encoded form data
+					if err := r.ParseForm(); err != nil {
+						log.Printf("Error parsing form data: %v", err)
+					} else {
+						for key, values := range r.Form {
+							if len(payloadData) > 0 {
+								payloadData += ","
+							}
+							payloadData += fmt.Sprintf("%s=%s", key, strings.Join(values, "|"))
+						}
+					}
+				} else if r.Header.Get("Content-Type") == "text/plain" {
+					// Handle plain text body
+					bodyBytes, err := ioutil.ReadAll(r.Body)
+					if err != nil {
+						log.Printf("Error reading text body: %v", err)
+					} else {
+						payloadData = string(bodyBytes)
+					}
+				}
+			}
+		}
+		// Process / match request URL based on traptConfig (signatures)
 		for _, trap := range trapConfig {
 			for _, behaviour := range trap.Behaviour {
 				params := make(map[string]string)
@@ -403,12 +419,12 @@ func allHandler(trapConfig []Trap) http.Handler {
 	})
 }
 
-func StartHandler(port string, trapConfig []Trap, cert string, key string) {
+func StartHandler(port string, trapConfig []Trap, cert string, key string, catchall string) {
 	r := mux.NewRouter()
 	fmt.Println("[~>] Loaded " + strconv.Itoa(len(trapConfig)) + " traps on Port:" + port + ". Let's get the ball rolling!")
 
 	// Pass each port's `trapConfig` directly to `allHandler` to preserve traps on different ports
-	r.PathPrefix("/").Handler(allHandler(trapConfig))
+	r.PathPrefix("/").Handler(allHandler(trapConfig, catchall))
 
 	if port == "443" {
 		log.Fatal(http.ListenAndServeTLS(":"+port, cert, key, r))

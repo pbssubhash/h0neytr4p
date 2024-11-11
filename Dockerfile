@@ -26,5 +26,5 @@ COPY --from=builder /app/app.key /opt/h0neytr4p/
 COPY --from=builder /app/app.crt /opt/h0neytr4p/
 #
 WORKDIR /opt/h0neytr4p
-CMD ["-cert=app.crt", "-key=app.key", "-log=log/log.json", "-payload=/opt/h0neytr4p/payloads/", "-traps=traps/"]
+CMD ["-cert=app.crt", "-key=app.key", "-log=log/log.json", "-catchall=false", "-payload=/opt/h0neytr4p/payloads/", "-traps=traps/"]
 ENTRYPOINT ["./h0neytr4p"]

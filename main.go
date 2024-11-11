@@ -44,6 +44,7 @@ func main() {
 	var wg sync.WaitGroup
 	trapsFolder := flag.String("traps", "Default", "Traps folder - It's a string.")
 	log := flag.String("log", "Default", "Log file - It's a string.")
+	catchall := flag.String("catchall", "true", "Catch all or only trap based payloads - It's a string.")
 	payload := flag.String("payload", "Default", "Payload folder - It's a string.")
 	cert := flag.String("cert", "Default", "Certificate File")
 	key := flag.String("key", "Default", "Certificate File")
@@ -84,7 +85,7 @@ func main() {
 	}
 	for _, port := range ports {
 		wg.Add(1)
-		go h0neytr4p.StartHandler(port, filteredTraps[port], *cert, *key)
+		go h0neytr4p.StartHandler(port, filteredTraps[port], *cert, *key, *catchall)
 	}
 	wg.Wait()
 }
