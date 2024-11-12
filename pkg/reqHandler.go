@@ -63,7 +63,12 @@ func CheckParams(ruleParams map[string]string, requestParams map[string]string) 
 func GetFlatHeaders(r *http.Request) map[string]string {
 	flatHeaders := make(map[string]string)
 	for key, values := range r.Header {
-		flatHeaders["header_"+strings.ToLower(key)] = strings.Join(values, ", ")
+		// Only extract the main content type, ignoring any additional parameters like boundary
+		if key == "Content-Type" {
+			flatHeaders["header_"+strings.ToLower(key)] = strings.Split(values[0], ";")[0]
+		} else {
+			flatHeaders["header_"+strings.ToLower(key)] = strings.Join(values, ", ")
+		}
 	}
 	return flatHeaders
 }
