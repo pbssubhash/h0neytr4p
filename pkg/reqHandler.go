@@ -426,7 +426,7 @@ func allHandler(trapConfig []Trap, catchall string) http.Handler {
 
 func StartHandler(port string, trapConfig []Trap, cert string, key string, catchall string) {
 	r := mux.NewRouter()
-	fmt.Println("[~>] Loaded " + strconv.Itoa(len(trapConfig)) + " traps on Port:" + port + ". Let's get the ball rolling!")
+	fmt.Println("[~>] Loaded " + strconv.Itoa(len(trapConfig)) + " trap(s) on Port:" + port + ". Let's get the ball rolling!")
 
 	// Pass each port's `trapConfig` directly to `allHandler` to preserve traps on different ports
 	r.PathPrefix("/").Handler(allHandler(trapConfig, catchall))
