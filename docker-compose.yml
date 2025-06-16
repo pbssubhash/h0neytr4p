@@ -10,6 +10,7 @@ services:
       - "443:443"
       - "8080:80"
       - "8443:443"
+      - "10443:443"
     volumes:
       - ./log/:/opt/h0neytr4p/log/
       - ./payloads/:/opt/h0neytr4p/payloads/
