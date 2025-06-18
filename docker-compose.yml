@@ -1,0 +1,17 @@
+services:
+  h0neytr4p:
+    build: .
+    image: h0neytr4p:latest
+    read_only: true
+    container_name: h0neytr4p
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:80"
+      - "8443:443"
+      - "10443:443"
+    volumes:
+      - ./log/:/opt/h0neytr4p/log/
+      - ./payloads/:/opt/h0neytr4p/payloads/
+

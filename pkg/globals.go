@@ -1,22 +1,9 @@
 package h0neytr4p
 
-import "os"
-
-type LogEntry struct {
-	SourceIP  string
-	UserAgent string
-	Timestamp string
-	Path      string
-	Trapped   string
-}
-type Attacker struct {
-	SourceIP   string `json:"SourceIP"`
-	UserAgent  string `json:"UserAgent"`
-	TrappedFor string `json:"TrappedFor"`
-	RiskRating string `json:"RiskRating"`
-	References string `json:"References"`
-	Timestamp  string `json:"Timestamp"`
-}
+import (
+	"os"
+	"sync"
+)
 
 type Trap struct {
 	Basicinfo struct {
@@ -45,6 +32,14 @@ type Trap struct {
 	} `json:"Behaviour"`
 }
 
-var filenameGlobal *os.File
-var logFileGlobal *os.File
-var Verbose string
+const (
+	MaxMultipartSize = 101 * 1024 // 101KB
+	MaxJSONFormSize  = 11 * 1024  // 11KB
+)
+
+var (
+	logFile       *os.File
+	logFileMutex  sync.Mutex
+	payloadFolder string
+	Verbose       string
+)
